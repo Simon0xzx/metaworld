@@ -30,6 +30,7 @@ test_cases_old_noisy = [
 test_cases_latest_nonoise = [
     # name, policy, action noise pct, success rate
     ['assembly-v1', SawyerAssemblyV1Policy(), .0, 1.],
+    ['assembly-v2', SawyerAssemblyV2Policy(), .0, 1.],
     ['basketball-v1', SawyerBasketballV1Policy(), .0, .98],
     ['box-close-v1', SawyerBoxCloseV1Policy(), .0, .85],
     ['button-press-topdown-v1', SawyerButtonPressTopdownV1Policy(), .0, 1.],
@@ -80,6 +81,7 @@ test_cases_latest_nonoise = [
 test_cases_latest_noisy = [
     # name, policy, action noise pct, success rate
     ['assembly-v1', SawyerAssemblyV1Policy(), .1, .70],
+    ['assembly-v2', SawyerAssemblyV2Policy(), .1, .70],
     ['basketball-v1', SawyerBasketballV1Policy(), .1, .97],
     ['box-close-v1', SawyerBoxCloseV1Policy(), .1, .85],
     ['button-press-topdown-v1', SawyerButtonPressTopdownV1Policy(), .1, .98],
