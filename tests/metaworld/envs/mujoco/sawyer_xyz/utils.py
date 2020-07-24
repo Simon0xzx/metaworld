@@ -58,6 +58,8 @@ def trajectory_generator(env, policy, act_noise_pct, render=False):
         a = np.random.normal(a, act_noise_pct * action_space_ptp)
 
         o, r, done, info = env.step(a)
+        print(o)
+        assert env.observation_space.contains(o)
         if render:
             env.render()
 

@@ -66,6 +66,11 @@ class SawyerMocapBase(MujocoEnv, metaclass=abc.ABCMeta):
 
 
 class SawyerXYZEnv(SawyerMocapBase, metaclass=abc.ABCMeta):
+    _HAND_SPACE = Box(
+        np.array([-0.50, .39, .049]),
+        np.array([+0.51, .94, .51])
+    )
+
     def __init__(
             self,
             model_name,
@@ -231,6 +236,15 @@ class SawyerXYZEnv(SawyerMocapBase, metaclass=abc.ABCMeta):
             state_observation=obs,
             state_desired_goal=self._get_pos_goal(),
             state_achieved_goal=obs[3:-3],
+        )
+
+    @property
+    def observation_space(self):
+        obj_low = np.full(6, -np.inf)
+        obj_high = np.full(6, +np.inf)
+        return Box(
+            np.hstack((self._HAND_SPACE.low, obj_low, self.goal_space.low)),
+            np.hstack((self._HAND_SPACE.high, obj_high, self.goal_space.high))
         )
 
     def reset(self):

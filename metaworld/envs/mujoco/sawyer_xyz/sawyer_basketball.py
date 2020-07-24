@@ -40,10 +40,9 @@ class SawyerBasketballEnv(SawyerXYZEnv):
             np.hstack((obj_low, goal_low)),
             np.hstack((obj_high, goal_high)),
         )
-        self.goal_space = Box(np.array(goal_low), np.array(goal_high))
-        self.observation_space = Box(
-            np.hstack((self.hand_low, obj_low, obj_low, goal_low)),
-            np.hstack((self.hand_high, obj_high, obj_high, goal_high)),
+        self.goal_space = Box(
+            np.array(goal_low) + np.array([0, -0.05001, 0.1000]),
+            np.array(goal_high) + np.array([0, -0.05000, 0.1001])
         )
 
     @property

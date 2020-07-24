@@ -50,11 +50,6 @@ class SawyerBinPickingEnv(SawyerXYZEnv):
         self.obj_and_goal_space = Box(low=np.array([-0.22, -0.02]),
                                       high=np.array([0.6, 0.8]))
 
-        self.observation_space = Box(
-            np.hstack((self.hand_low, obj_low, obj_low, goal_low)),
-            np.hstack((self.hand_high, obj_high, obj_high, goal_high)),
-        )
-
     @property
     def model_name(self):
         return get_asset_full_path('sawyer_xyz/sawyer_bin_picking.xml')
