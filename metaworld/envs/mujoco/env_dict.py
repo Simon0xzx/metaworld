@@ -236,6 +236,59 @@ MEDIUM_MODE_ARGS_KWARGS = dict(
     train=medium_mode_train_args_kwargs,
     test=medium_mode_test_args_kwargs,
 )
+
+
+'''
+    MLSP environments and arguments
+'''
+
+
+def _hard_mode_args_kwargs(env_cls_, key_):
+    del env_cls_
+
+    kwargs = dict(random_init=True, task_id=list(ALL_V1_ENVIRONMENTS.keys()).index(key_))
+    if key_ == 'reach-v1' or key_ == 'reach-wall-v1':
+        kwargs['task_type'] = 'reach'
+    elif key_ == 'push-v1' or key_ == 'push-wall-v1':
+        kwargs['task_type'] = 'push'
+    elif key_ == 'pick-place-v1' or key_ == 'pick-place-wall-v1':
+        kwargs['task_type'] = 'pick_place'
+    return dict(args=[], kwargs=kwargs)
+
+
+SPECIAL_MODE_CLS_DICT = OrderedDict((
+    ('train',
+        OrderedDict((
+            ('sweep-v1', SawyerSweepEnv),
+            ('basketball-v1', SawyerBasketballEnv),
+            ('stick-pull-v1', SawyerStickPullEnv),
+            ('sweep-into-v1', SawyerSweepIntoGoalEnv),
+            ('hammer-v1', SawyerHammerEnv),
+            ('reach-v1', SawyerReachPushPickPlaceEnv),
+            ('push-v1', SawyerReachPushPickPlaceEnv),
+            ('pick-place-v1', SawyerReachPushPickPlaceEnv),
+            ('window-open-v1', SawyerWindowOpenEnv),
+            ('door-open-v1', SawyerDoorEnv)
+        ))
+    ),
+    ('test',
+        OrderedDict((
+            ('shelf-place-v1', SawyerShelfPlaceEnv),
+            ('button-press-wall-v1', SawyerButtonPressWallEnv),
+            ('push-wall-v1', SawyerReachPushPickPlaceWallEnv),
+            ('box-close-v1', SawyerBoxCloseEnv),
+            ('bin-picking-v1', SawyerBinPickingEnv),
+        ))
+    )
+))
+
+
+SPECIAL_MODE_ARGS_KWARGS = dict(train={}, test={})
+for key, env_cls in SPECIAL_MODE_CLS_DICT['train'].items():
+    SPECIAL_MODE_ARGS_KWARGS['train'][key] = _hard_mode_args_kwargs(env_cls, key)
+for key, env_cls in SPECIAL_MODE_CLS_DICT['test'].items():
+    SPECIAL_MODE_ARGS_KWARGS['test'][key] = _hard_mode_args_kwargs(env_cls, key)
+
 '''
     ML45 environments and arguments
 '''
@@ -301,21 +354,10 @@ HARD_MODE_CLS_DICT = OrderedDict((
 ))
 
 
-def _hard_mode_args_kwargs(env_cls_, key_):
-    del env_cls_
-
-    kwargs = dict(random_init=True, task_id=list(ALL_V1_ENVIRONMENTS.keys()).index(key_))
-    if key_ == 'reach-v1' or key_ == 'reach-wall-v1':
-        kwargs['task_type'] = 'reach'
-    elif key_ == 'push-v1' or key_ == 'push-wall-v1':
-        kwargs['task_type'] = 'push'
-    elif key_ == 'pick-place-v1' or key_ == 'pick-place-wall-v1':
-        kwargs['task_type'] = 'pick_place'
-    return dict(args=[], kwargs=kwargs)
-
 
 HARD_MODE_ARGS_KWARGS = dict(train={}, test={})
 for key, env_cls in HARD_MODE_CLS_DICT['train'].items():
     HARD_MODE_ARGS_KWARGS['train'][key] = _hard_mode_args_kwargs(env_cls, key)
 for key, env_cls in HARD_MODE_CLS_DICT['test'].items():
     HARD_MODE_ARGS_KWARGS['test'][key] = _hard_mode_args_kwargs(env_cls, key)
+

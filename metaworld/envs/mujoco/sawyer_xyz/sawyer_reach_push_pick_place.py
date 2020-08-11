@@ -121,6 +121,44 @@ class SawyerReachPushPickPlaceEnv(SawyerXYZEnv):
         return [adjustedPos[0], adjustedPos[1],self.data.get_geom_xpos('objGeom')[-1]]
 
     def reset_model(self):
+        self._state_goal = self.goal.copy()
+        if self.random_init:
+            initial_obs = self.observation_space.sample()
+            self.hand_init_pos = initial_obs[:3]
+            self.obj_init_pos = initial_obs[3:]
+
+        self._reset_hand()
+        self.obj_init_pos = self.adjust_initObjPos(self.obj_init_pos)
+        self.obj_init_angle = self.init_config['obj_init_angle']
+        self.objHeight = self.data.get_geom_xpos('objGeom')[2]
+        self.heightTarget = self.objHeight + self.liftThresh
+
+        self._set_goal_marker(self._state_goal)
+        self._set_obj_xyz(self.obj_init_pos)
+        self.maxReachDist = np.linalg.norm(self.init_fingerCOM - np.array(self._state_goal))
+        self.maxPushDist = np.linalg.norm(self.obj_init_pos[:2] - np.array(self._state_goal)[:2])
+        self.maxPlacingDist = np.linalg.norm(
+            np.array([self.obj_init_pos[0], self.obj_init_pos[1], self.heightTarget]) - np.array(
+                self._state_goal)) + self.heightTarget
+        self.target_rewards = [1000 * self.maxPlacingDist + 1000 * 2, 1000 * self.maxReachDist + 1000 * 2,
+                               1000 * self.maxPushDist + 1000 * 2]
+
+        if self.task_type == 'reach':
+            idx = 1
+        elif self.task_type == 'push':
+            idx = 2
+        elif self.task_type == 'pick_place':
+            idx = 0
+        else:
+            raise NotImplementedError
+
+        self.target_reward = self.target_rewards[idx]
+        self.num_resets += 1
+
+        return self._get_obs()
+
+
+    def _reset_model_old(self):
         self._reset_hand()
         self._state_goal = self.goal.copy()
         self.obj_init_pos = self.adjust_initObjPos(self.init_config['obj_init_pos'])
