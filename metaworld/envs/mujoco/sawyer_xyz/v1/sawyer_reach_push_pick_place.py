@@ -9,10 +9,24 @@ class SawyerReachPushPickPlaceEnv(SawyerXYZEnv):
 
     def __init__(self):
         liftThresh = 0.04
-        goal_low=(-0.1, 0.8, 0.05)
-        goal_high=(0.1, 0.9, 0.3)
+        # Task 0
+        goal_low=(-0.2, 0.8, 0.05)
+        goal_high=(-0.2, 0.8, 0.05)
+        # # Task 1
+        # goal_low=(-0.1, 0.8, 0.05)
+        # goal_high=(-0.1, 0.8, 0.05)
+        # # Task 2
+        # goal_low = (0, 0.8, 0.05)
+        # goal_high = (0, 0.8, 0.05)
+        # # Task 3
+        # goal_low = (0.1, 0.8, 0.05)
+        # goal_high = (0.1, 0.8, 0.05)
+        # # Task 4
+        # goal_low = (0.2, 0.8, 0.05)
+        # goal_high = (0.2, 0.8, 0.05)
+
         hand_low = (-0.5, 0.40, 0.05)
-        hand_high = (0.5, 1, 0.5)
+        hand_high = (-0.5, 0.40, 0.05)
         obj_low = (-0.1, 0.6, 0.02)
         obj_high = (0.1, 0.7, 0.02)
 
