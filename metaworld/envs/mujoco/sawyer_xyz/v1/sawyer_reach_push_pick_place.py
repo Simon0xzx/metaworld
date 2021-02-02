@@ -9,26 +9,36 @@ class SawyerReachPushPickPlaceEnv(SawyerXYZEnv):
 
     def __init__(self):
         liftThresh = 0.04
-        # Task 0
-        goal_low=(-0.2, 0.8, 0.05)
-        goal_high=(-0.2, 0.8, 0.05)
-        # # Task 1
-        # goal_low=(-0.1, 0.8, 0.05)
-        # goal_high=(-0.1, 0.8, 0.05)
-        # # Task 2
-        # goal_low = (0, 0.8, 0.05)
-        # goal_high = (0, 0.8, 0.05)
-        # # Task 3
-        # goal_low = (0.1, 0.8, 0.05)
-        # goal_high = (0.1, 0.8, 0.05)
-        # # Task 4
-        # goal_low = (0.2, 0.8, 0.05)
-        # goal_high = (0.2, 0.8, 0.05)
 
+        task_num = 0
         hand_low = (-0.5, 0.40, 0.05)
-        hand_high = (-0.5, 0.40, 0.05)
-        obj_low = (-0.1, 0.6, 0.02)
-        obj_high = (0.1, 0.7, 0.02)
+        hand_high = (0.5, 0.40, 0.05)
+        if task_num == 0:
+            goal_low=(-0.2, 0.8, 0.05)
+            goal_high=(-0.2, 0.8, 0.05)
+            obj_low = (-0.2, 0.6, 0.02)
+            obj_high = (-0.2, 0.7, 0.02)
+        elif task_num == 1:
+            goal_low=(-0.1, 0.8, 0.05)
+            goal_high=(-0.1, 0.8, 0.05)
+            obj_low = (-0.1, 0.6, 0.02)
+            obj_high = (-0.1, 0.7, 0.02)
+        elif task_num == 2:
+            goal_low = (0, 0.8, 0.05)
+            goal_high = (0, 0.8, 0.05)
+            obj_low = (0, 0.6, 0.02)
+            obj_high = (0, 0.7, 0.02)
+        elif task_num == 3:
+            goal_low = (0.1, 0.8, 0.05)
+            goal_high = (0.1, 0.8, 0.05)
+            obj_low = (0.1, 0.6, 0.02)
+            obj_high = (0.1, 0.7, 0.02)
+        elif task_num ==4:
+            goal_low = (0.2, 0.8, 0.05)
+            goal_high = (0.2, 0.8, 0.05)
+            obj_low = (0.2, 0.6, 0.02)
+            obj_high = (0.2, 0.7, 0.02)
+        print("Running special task: {}".format(task_num))
 
         self.task_types = ['pick_place', 'reach', 'push']
 
